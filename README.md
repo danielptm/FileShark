@@ -7,23 +7,9 @@ In other words you use FileShark to transform a source csv file to a target csv 
 there is no writing files to disk.
 
 
+FileShark! Description of feautres to come:
 
-
-FileShark! feautres to come:
-
-Construct a FileShark object with an Inputstream. The IS has to have rows in csv format otherwise an error is thrown.
-Decide whether to deserialize to a specific java object or keep rows/objects available in an Array structure after reading IS.
-Decide whether to build object of a specific class or build a line and write it to a Stream after each line mapping cycle is complete.
-Decide whether to include heading or not.
-Designate intervals of direct mapping along with custom mapping. Example properties 1-3 of source object map 
-to properties 1-3 of target object, target 4 has custom mapping, properties 5-7 of source object map directly 
-to properties 5-7 of target object.
-
-Build a line/object in the following ways.
-Direct mapping, map a property from the source bean to a property of the target bean.
-Map from an index value of the source object to index value of target object.
-Map from an index value of source object to property of target object.
-Get value by index value, transform it, map it to index value of target object.
-Get value by property, transform it then map it to property of target object.
-Get value by index value, transform it, map to it to property of target object.
-Get value by property, transform it, then map it to index of target object.
+Construct a FileShark object with an Inputstream and  numberOfColumns for targetFile. 
+The IS has to have rows in csv format otherwise an error is thrown.
+A builder provides an option to include header. True/false is given, provideHeader is false by default.
+The builder also returns an option withInterval(var) where you can set an interval, intervals transformations are placed in the order that that they are set in the builder in the target file and are direct mappings, you can call with interval as many times as you want. But an error is thrown if you call it so many times/and your intervals are outside the bounds of the target array. You can also call withCustomMapping(var, (item)->). It takes 2 arguments the first argument is a string, it can be a string as a number (index), a string in the form of an interval (index interval), or a comma separated values in the form 1:1. The number before the colon represents the source index, and the number after the colon represents the target index. The second argument is a lambda which is used to implement the custom logic for the mapping for the designated indexes. Once all the intervals are set, then .build() is called which makes the transformation and returns an the data as an OutputStream which can be used to write to file, S3, or whatever. 
