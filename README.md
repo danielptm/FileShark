@@ -1,4 +1,4 @@
-# fileShark!
+# FileShark!
 What is FileShark! ?
 
 ### A generic tool that aids with doing file mapping of csv files.
